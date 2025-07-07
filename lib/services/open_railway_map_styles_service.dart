@@ -21,7 +21,6 @@ class OpenRailwayMapStylesService {
   Future<String> loadStyle(MapStyle style, {Brightness theme = Brightness.light}) async {
     final url = '$_baseUrl/${style.key}-${theme.key}.json';
     final response = await _dio.get<Map<String, dynamic>>(url);
-    if (!response.isSuccessful) throw Exception("Invalid Response: ${response.statusMessage}");
     final data = response.data;
     if (data == null) throw Exception("no data received");
     final rewrittenData = _rewriteOriginLocation(data);
