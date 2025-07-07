@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 import 'package:track_map/models/map_style.dart';
 import 'package:track_map/models/themed_map_source.dart';
 import 'package:track_map/services/temp_file_service.dart';
-import 'package:track_map/utils/dio_extensions.dart';
 
 @singleton
 class OpenRailwayMapStylesService {

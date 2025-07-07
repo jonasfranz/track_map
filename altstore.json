@@ -1,0 +1,39 @@
+{
+  "name": "TrackMap Store",
+  "iconURL": "https://i.imgur.com/P1Qb9dL.png",
+  "website": "https://github.com/jonasfranz/track_map",
+  "tintColor": "#ec1c64",
+  "featuredApps": [
+    "de.jonasfranz.trackMap"
+  ],
+  "apps": [
+    {
+      "name": "TrackMap",
+      "bundleIdentifier": "de.jonasfranz.trackMap",
+      "developerName": "Jonas Franz",
+      "subtitle": "OpenRailwayMap Viewer",
+      "localizedDescription": "Vector-based OpenRailwayMap viewer inspired by OpenRailwayMap.app",
+      "iconURL": "https://i.imgur.com/omr4D1R.png",
+      "tintColor": "#ec1c64",
+      "category": "utilities",
+      "versions": [
+        {
+          "downloadURL": "https://github.com/jonasfranz/flutter-maplibre-gl/releases/download/0.0.1/TrackMap.ipa",
+          "size": 25600000,
+          "version": "1.0.0",
+          "buildVersion": null,
+          "date": "2025-07-07T21:21:00+02:00",
+          "localizedDescription": null,
+          "minOSVersion": null
+        }
+      ],
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {
+          "NSLocationWhenInUseUsageDescription": "Show Location on the Map"
+        }
+      }
+    }
+  ],
+  "news": []
+}
