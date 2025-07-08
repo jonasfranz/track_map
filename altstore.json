@@ -23,6 +23,14 @@
           "date": "2025-07-07T21:21:00+02:00",
           "localizedDescription": null,
           "minOSVersion": null
+        },
+        {
+          "version": "1.0.0",
+          "date": "2025-07-08T15:53:11.088116",
+          "downloadURL": "https://github.com/jonasfranz/track_map/releases/download/v1.0.0/Runner.ipa",
+          "buildVersion": "23",
+          "size": 25107796,
+          "minOSVersion": "12.0"
         }
       ],
       "appPermissions": {
