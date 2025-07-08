@@ -61,6 +61,15 @@ class MapViewModel {
     return CameraPosition(target: initialLocation, zoom: 3.75);
   }
 
+  Future<void> animateToCurrentLocation() async {
+    final currentLocation =
+        await _foregroundController?.requestMyLocationLatLng() ??
+        await _locationService.findCurrentLocation();
+    if (currentLocation != null) {
+      await _foregroundController?.animateCamera(CameraUpdate.newLatLng(currentLocation));
+    }
+  }
+
   void dispose() {
     _syncService.dispose();
     _viewState$.close();

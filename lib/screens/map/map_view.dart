@@ -23,6 +23,11 @@ class MapView extends HookWidget {
       loading: (_) => Scaffold(body: Center(child: CircularProgressIndicator())),
       ready:
           (state) => Scaffold(
+            floatingActionButton: FloatingActionButton.small(
+              onPressed: viewModel.animateToCurrentLocation,
+              child: Icon(Icons.my_location),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
             body: Stack(
               children: [
                 MapLibreMap(
