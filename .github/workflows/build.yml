@@ -26,7 +26,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - run: flutter build web --build-number=${{github.run_number}} --base-href "/track_map"
+      - run: flutter build web --build-number=${{github.run_number}} --base-href "/track_map/"
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
