@@ -13,7 +13,6 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze project source
@@ -43,7 +42,6 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -66,7 +64,6 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       - run: flutter build ipa --no-codesign --build-number=${{github.run_number}}
       - name: Export unsigned IPA
         run: |
