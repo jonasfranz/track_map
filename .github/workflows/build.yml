@@ -27,17 +27,36 @@ jobs:
         with:
           channel: stable
       - run: flutter build web --build-number=${{github.run_number}}
-      - name: Archive production artifacts
+      - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
           name: web
           path: build/web/**
-      - name: Update GitHub Page
+      - name: Archive GitHub Page
         if: github.ref == 'refs/heads/main'
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/web/
+
+  # Deploy job
+  deploy_web:
+    if: github.ref == 'refs/heads/main'
+    needs: web
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
   android:
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +72,7 @@ jobs:
           java-version: '21'
       - run: flutter build apk --build-number=${{github.run_number}}
       - run: flutter build appbundle --build-number=${{github.run_number}}
-      - name: Archive production artifacts
+      - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
           name: android
@@ -81,7 +100,7 @@ jobs:
           cd "$TMP_DIR"
           zip -r "$OUTPUT_DIR/$APP_NAME.ipa" Payload
           rm -rf "$TMP_DIR"
-      - name: Archive production artifacts
+      - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ios
