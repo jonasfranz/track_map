@@ -32,6 +32,12 @@ jobs:
         with:
           name: web
           path: build/web/**
+      - name: Update GitHub Page
+        if: github.ref == 'refs/heads/main'
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web/
   android:
     runs-on: ubuntu-latest
     steps:
