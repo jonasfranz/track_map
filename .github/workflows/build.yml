@@ -1,0 +1,85 @@
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Analyze project source
+        run: dart analyze
+  build:web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
+      - run: flutter build web --build-number=${{github.run_number}}
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: build/web/**
+  build:android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - run: flutter build apk --build-number=${{github.run_number}}
+      - run: flutter build appbundle --build-number=${{github.run_number}}
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: |
+            build/app/outputs/bundle/release/app-release.aab
+            build/app/outputs/flutter-apk/app-release.apk*
+  build:ios:
+    runs-on: macos-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
+      - run: flutter build ipa --no-codesign --build-number=${{github.run_number}}
+      - name: Export unsigned IPA
+        run: |
+          ARCHIVE_PATH=$PWD/build/ios/archive/Runner.xcarchive
+          OUTPUT_DIR=$PWD/build/ios/archive
+          APP_NAME="Runner"
+          TMP_DIR=$(mktemp -d)
+          mkdir -p "$TMP_DIR/Payload"
+          cp -R "$ARCHIVE_PATH/Products/Applications/$APP_NAME.app" "$TMP_DIR/Payload"
+          cd "$TMP_DIR"
+          zip -r "$OUTPUT_DIR/$APP_NAME.ipa" Payload
+          rm -rf "$TMP_DIR"
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios
+          path: build/ios/archive/Runner.ipa
