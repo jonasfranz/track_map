@@ -137,9 +137,7 @@ jobs:
           artifacts/app-release.aab
           artifacts/app-release.apk
     - name: Update AltStore source
-      with:
-        DOWNLOAD_PATH: "${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}"
-      run: dart run altstore_updater update -s altstore.json --ipa artifacts/Runner.ipa --url=${DOWNLOAD_PATH}
+      run: dart run altstore_updater update -s altstore.json --ipa artifacts/Runner.ipa --url=${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
     - uses: stefanzweifel/git-auto-commit-action@v6
       with:
         branch: main
