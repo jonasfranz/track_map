@@ -49,7 +49,7 @@ class OpenRailwayMapStylesService {
         error: err,
         stackTrace: stack,
       );
-      return 'assets/styles/$fileName';
+      return 'assets/assets/styles/$fileName';
     }
   }
 

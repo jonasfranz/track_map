@@ -11,6 +11,11 @@ class AssetFileService implements TempFileService {
     await file.writeAsString(content);
     return file.path;
   }
+
+  @override
+  String getAssetPath(String path) {
+    throw UnimplementedError();
+  }
 }
 
 void main() async {

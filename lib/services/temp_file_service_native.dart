@@ -14,4 +14,9 @@ class TempFileServiceImpl implements TempFileService {
     await file.writeAsString(content);
     return file.absolute.path;
   }
+
+  @override
+  String getAssetPath(String path) {
+    return path;
+  }
 }

@@ -7,4 +7,9 @@ class TempFileServiceImpl implements TempFileService {
   Future<String> writeToFile(String name, String content) async {
     throw UnimplementedError();
   }
+
+  @override
+  String getAssetPath(String path) {
+    throw UnimplementedError();
+  }
 }
