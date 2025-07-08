@@ -1,0 +1,16 @@
+name: altstore_updater
+description: simple tool to update altstore source jsons
+version: 0.0.1
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.7.2
+
+# Add regular dependencies here.
+dependencies:
+  args: ^2.7.0
+  plist_parser: ^0.2.4
+  archive: ^4.0.7
+
+dev_dependencies:
+  lints: ^5.0.0

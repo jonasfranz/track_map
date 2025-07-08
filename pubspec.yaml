@@ -47,6 +47,8 @@ dependencies:
   logger: ^2.6.0
 
 dev_dependencies:
+  altstore_updater:
+    path: tools/altstore_updater
   flutter_test:
     sdk: flutter
   injectable_generator: ^2.7.0

@@ -9,6 +9,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "85.0.0"
+  altstore_updater:
+    dependency: "direct dev"
+    description:
+      path: "tools/altstore_updater"
+      relative: true
+    source: path
+    version: "0.0.1"
   analyzer:
     dependency: transitive
     description:
@@ -585,6 +592,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.6"
+  plist_parser:
+    dependency: transitive
+    description:
+      name: plist_parser
+      sha256: "556e420e0bc8ac9f6192ad236eae87c6f7d83f9b641fcfaebde67d825208b2a4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   plugin_platform_interface:
     dependency: transitive
     description:

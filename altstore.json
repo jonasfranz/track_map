@@ -18,8 +18,6 @@
       "category": "utilities",
       "versions": [
         {
-          "downloadURL": "https://github.com/jonasfranz/flutter-maplibre-gl/releases/download/0.0.1/TrackMap.ipa",
-          "size": 25600000,
           "version": "1.0.0",
           "buildVersion": null,
           "date": "2025-07-07T21:21:00+02:00",
