@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:track_map/dependency_injection.dart';
 import 'package:track_map/models/map_style.dart';
+import 'package:track_map/models/themed_map_source_resolver.dart';
 import 'package:track_map/screens/map/map_style_segment_button.dart';
 import 'package:track_map/screens/map/map_view_model.dart';
 

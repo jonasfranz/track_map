@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:track_map/models/map_style.dart';
 import 'package:track_map/models/themed_map_source.dart';
 import 'package:track_map/services/temp_file_service.dart';
@@ -17,54 +17,55 @@ class OpenRailwayMapStylesService {
   final Dio _dio;
   final TempFileService _tempFileService;
 
-  Future<String> loadStyle(MapStyle style, {Brightness theme = Brightness.light}) async {
-    final url = '$_baseUrl/${style.key}-${theme.key}.json';
-    final response = await _dio.get<Map<String, dynamic>>(url);
-    final data = response.data;
-    if (data == null) throw Exception("no data received");
-    final rewrittenData = _rewriteOriginLocation(data);
-    final rewrittenDataWithLayer = {
-      ...rewrittenData,
-      "layers": [
-        {
-          "id": "background",
-          "type": "background",
-          "paint": {"background-color": "rgba(0,0,0,0)"},
-        },
-        ...rewrittenData["layers"],
-      ],
-    };
-    final result = jsonEncode(rewrittenDataWithLayer);
-    if (Platform.isAndroid) return result;
-    final path = await _tempFileService.writeToFile("${style.key}-${theme.key}.json", result);
-    print(path);
-    return path;
+  final Logger _log = Logger();
+
+  Future<String> loadStyle(MapStyle style, {bool dark = false}) async {
+    final fileName = "${style.key}-${dark ? 'dark' : 'light'}.json";
+    try {
+      final url = '$_baseUrl/$fileName';
+      final response = await _dio.get<Map<String, dynamic>>(url);
+      final data = response.data;
+      if (data == null) throw Exception("no data received");
+      final rewrittenData = _rewriteOriginLocation(data);
+      final rewrittenDataWithLayer = {
+        ...rewrittenData,
+        "layers": [
+          {
+            "id": "background",
+            "type": "background",
+            "paint": {"background-color": "rgba(0,0,0,0)"},
+          },
+          ...rewrittenData["layers"],
+        ],
+      };
+      final result = jsonEncode(rewrittenDataWithLayer);
+      if (Platform.isAndroid) return result;
+      final path = await _tempFileService.writeToFile(fileName, result);
+      _log.i("wrote style json to $path");
+      return path;
+    } catch (err, stack) {
+      _log.w(
+        'error while fetching and rewritting style json, falling back to asset backup',
+        error: err,
+        stackTrace: stack,
+      );
+      return 'assets/styles/$fileName';
+    }
   }
 
   Future<ThemedMapSource> loadThemedStyle(MapStyle style) async {
     final [light, dark] = await Future.wait([
-      loadStyle(style, theme: Brightness.light),
-      loadStyle(style, theme: Brightness.dark),
+      loadStyle(style, dark: false),
+      loadStyle(style, dark: true),
     ]);
     return ThemedMapSource(dark: dark, light: light);
   }
 
   Future<Map<MapStyle, ThemedMapSource>> loadAllThemedStyles() async {
-    final all = Map.fromIterables(
+    return Map.fromIterables(
       MapStyle.values,
-      await Future.wait(
-        MapStyle.values.map((style) async {
-          try {
-            return loadThemedStyle(style);
-          } catch (err) {
-            print("error while loading: ${style.key}: $err");
-            return null;
-          }
-        }),
-      ),
+      await Future.wait(MapStyle.values.map(loadThemedStyle)),
     );
-    all.removeWhere((key, value) => value == null);
-    return all.map((key, value) => MapEntry(key, value!));
   }
 
   Map<String, dynamic> _rewriteOriginLocation(Map<String, dynamic> style) => style.map(
@@ -92,11 +93,4 @@ class OpenRailwayMapStylesService {
         }
         return value;
       }).toList();
-}
-
-extension _BrightnessKey on Brightness {
-  String get key => switch (this) {
-    Brightness.dark => "dark",
-    Brightness.light => "light",
-  };
 }

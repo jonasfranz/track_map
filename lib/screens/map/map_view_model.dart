@@ -40,14 +40,25 @@ class MapViewModel {
 
   Stream<MapViewState> _loadInitialStyles() async* {
     yield MapViewState.loading();
-    final initialLocation = await _locationService.findCurrentLocation() ?? LatLng(0, 0);
-    final initialCameraPosition = CameraPosition(target: initialLocation, zoom: 8);
-    final styles = await _stylesService.loadAllThemedStyles();
+    final [initialCameraPosition, styles] = await Future.wait<dynamic>([
+      _findInitialCameraPosition(),
+      _stylesService.loadAllThemedStyles(),
+    ]);
     yield MapViewState.ready(
       availableStyles: styles,
       selectedStyle: MapStyle.standard,
       initialCameraPosition: initialCameraPosition,
     );
+  }
+
+  Future<CameraPosition> _findInitialCameraPosition() async {
+    final initialLocation =
+        await _locationService
+            .findCurrentLocation()
+            .timeout(Duration(seconds: 30), onTimeout: () => null)
+            .catchError((_) => null) ??
+        LatLng(51.14, 12.55);
+    return CameraPosition(target: initialLocation, zoom: 3.75);
   }
 
   void dispose() {

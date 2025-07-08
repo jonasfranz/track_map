@@ -31,7 +31,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i361.Dio>(() => trackMapModule.dio);
     gh.factory<_i55.LocationService>(() => _i55.LocationService());
     gh.factory<_i395.MapSyncService>(() => _i395.MapSyncService());
-    gh.singleton<_i624.TempFileService>(() => const _i624.TempFileService());
+    gh.singleton<_i624.TempFileService>(() => trackMapModule.tempFileService);
     gh.singleton<_i952.OpenRailwayMapStylesService>(
       () => _i952.OpenRailwayMapStylesService(
         gh<_i361.Dio>(),
