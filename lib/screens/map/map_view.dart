@@ -7,6 +7,7 @@ import 'package:track_map/models/themed_map_source_resolver.dart';
 import 'package:track_map/screens/map/map_style_segment_button.dart';
 import 'package:track_map/screens/map/map_view_model.dart';
 
+import '../station_modal/station_modal.dart';
 import 'map_view_state.dart';
 
 class MapView extends HookWidget {
@@ -39,6 +40,15 @@ class MapView extends HookWidget {
                 MapLibreMap(
                   initialCameraPosition: state.initialCameraPosition,
                   onMapCreated: viewModel.setForegroundController,
+                  onMapClick: (point, coordinates) async {
+                    final properties = await viewModel.resolveStationProperties(point, coordinates);
+                    if (properties != null && context.mounted) {
+                      await showModalBottomSheet(
+                        context: context,
+                        builder: (context) => StationModal(properties: properties),
+                      );
+                    }
+                  },
                   styleString: state.selectedSource.resolve(context),
                   trackCameraPosition: true,
                   myLocationEnabled: true,

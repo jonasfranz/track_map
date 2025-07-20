@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
@@ -58,7 +59,7 @@ class MapViewModel {
             .timeout(Duration(seconds: 30), onTimeout: () => null)
             .catchError((_) => null) ??
         LatLng(51.14, 12.55);
-    return CameraPosition(target: initialLocation, zoom: 3.75);
+    return CameraPosition(target: initialLocation, zoom: 12.5);
   }
 
   Future<void> animateToCurrentLocation() async {
@@ -80,5 +81,23 @@ class MapViewModel {
       ready: (value) => value.copyWith(selectedStyle: selectedStyle),
       orElse: () => _viewState$.value,
     );
+  }
+
+  Future<Map<String, dynamic>?> resolveStationProperties(
+    Point<double> point,
+    LatLng coordinates,
+  ) async {
+    final features = await _foregroundController?.queryRenderedFeatures(
+      point,
+      (await _foregroundController?.getLayerIds())?.cast() ?? <String>[],
+      null,
+    );
+    if (features == null || features.isEmpty) return null;
+    for (final feature in features) {
+      final properties = feature["properties"];
+      if (properties["name"] == null) return null;
+      return properties;
+    }
+    return null;
   }
 }
