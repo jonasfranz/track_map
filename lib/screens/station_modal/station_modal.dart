@@ -53,7 +53,7 @@ class StationModal extends StatelessWidget {
 }
 
 class _StationTitle extends StatelessWidget {
-  const _StationTitle({super.key, required this.properties});
+  const _StationTitle({required this.properties});
 
   final dynamic properties;
 
