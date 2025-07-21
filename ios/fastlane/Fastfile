@@ -24,7 +24,6 @@ platform :ios do
 
   lane :beta do
     setup_ci if ENV['CI']
-    app_store_connect_api_key()
     match(type: 'appstore', readonly: true)
     build_app(
       skip_build_archive: true,
@@ -32,6 +31,7 @@ platform :ios do
       archive_path: "../build/ios/archive/Runner.xcarchive",
       export_team_id: "Z48VLBM2R7"
     )
+    app_store_connect_api_key()
     upload_to_testflight(
         skip_waiting_for_build_processing: true,
     )
