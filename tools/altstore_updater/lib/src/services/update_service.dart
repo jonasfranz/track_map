@@ -32,16 +32,8 @@ class UpdateService {
     print("Add new version: $newAppVersion");
     originalJson["apps"]
         .firstWhere((app) => app["bundleIdentifier"] == ipaInfos.bundleIdentifier)["versions"]
-        .add(newAppVersion.toJson());
+        .insert(0, newAppVersion.toJson());
     final encoder = JsonEncoder.withIndent('  ');
     originalFile.writeAsString(encoder.convert(originalJson));
   }
-}
-
-void main() async {
-  await UpdateService().addUpdate(
-    "/Users/user/StudioProjects/track_map/altstore.json",
-    downloadUrl: "ewf",
-    ipaPath: "/Users/user/Downloads/TrackMap.ipa",
-  );
 }
