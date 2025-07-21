@@ -24,6 +24,7 @@ platform :ios do
 
   lane :beta do
     setup_ci if ENV['CI']
+    app_store_connect_api_key()
     match(type: 'appstore', readonly: true)
     build_app(
       skip_build_archive: true,
