@@ -37,7 +37,8 @@
       "appPermissions": {
         "entitlements": [],
         "privacy": {
-          "NSLocationWhenInUseUsageDescription": "Show Location on the Map"
+          "NSLocationWhenInUseUsageDescription": "Show Location on the Map",
+          "NSLocationAlwaysAndWhenInUseUsageDescription": "Show your current location on the map"
         }
       }
     }
