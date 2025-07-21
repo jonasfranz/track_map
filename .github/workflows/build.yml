@@ -95,6 +95,7 @@ jobs:
       - run: cd ios && bundle install && bundle exec fastlane beta
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{Secrets.MATCH_GIT_BASIC_AUTHORIZATION}}
           APP_STORE_CONNECT_API_KEY_CONTENT: ${{Secrets.APP_STORE_CONNECT_API_KEY_CONTENT}}
           APP_STORE_CONNECT_ISSUER_ID: ${{Secrets.APP_STORE_CONNECT_ISSUER_ID}}
           APP_STORE_CONNECT_API_KEY_ID: ${{Secrets.APP_STORE_CONNECT_API_KEY_ID}}
