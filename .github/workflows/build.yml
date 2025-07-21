@@ -76,23 +76,35 @@ jobs:
         with:
           channel: stable
       - run: flutter build ipa --no-codesign --build-number=${{github.run_number}}
-      - name: Export unsigned IPA
-        run: |
-          ARCHIVE_PATH=$PWD/build/ios/archive/Runner.xcarchive
-          OUTPUT_DIR=$PWD/build/ios/archive
-          APP_NAME="Runner"
-          TMP_DIR=$(mktemp -d)
-          mkdir -p "$TMP_DIR/Payload"
-          cp -R "$ARCHIVE_PATH/Products/Applications/$APP_NAME.app" "$TMP_DIR/Payload"
-          cd "$TMP_DIR"
-          zip -r "$OUTPUT_DIR/$APP_NAME.ipa" Payload
-          rm -rf "$TMP_DIR"
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ios
-          path: build/ios/archive/Runner.ipa
+          path: build/ios/archive/Runner.xcarchive/
 
+  deploy_app_store:
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    needs: ios
+    runs-on: macos-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: ios
+      - run: cd ios && bundle install && bundle exec fastlane beta
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{Secrets.APP_STORE_CONNECT_API_KEY_CONTENT}}
+          APP_STORE_CONNECT_ISSUER_ID: ${{Secrets.APP_STORE_CONNECT_ISSUER_ID}}
+          APP_STORE_CONNECT_API_KEY_ID: ${{Secrets.APP_STORE_CONNECT_API_KEY_ID}}
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios
+          path: |
+            ios/track_map.ipa
+            ios/track_map.app.dSYM.zip
   # Deployment
   # Deploy page on every main
   deploy_web:
@@ -116,7 +128,7 @@ jobs:
   release:
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    needs: [ android, ios ]
+    needs: [ android, deploy_app_store ]
     permissions:
       contents: write
     steps:
@@ -135,13 +147,13 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          artifacts/ios/Runner.ipa
+          artifacts/deploy_app_store/track_map.ipa
           artifacts/android/bundle/release/app-release.aab
           artifacts/android/flutter-apk/app-release.apk
           artifacts/android/flutter-apk/app-release.apk.sha1
           web.zip
     - name: Update AltStore source
-      run: dart run altstore_updater update -s altstore.json --ipa artifacts/ios/Runner.ipa --url=${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
+      run: dart run altstore_updater update -s altstore.json --ipa artifacts/deploy_app_store/track_map.ipa --url=${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
     - uses: stefanzweifel/git-auto-commit-action@v6
       with:
         branch: main

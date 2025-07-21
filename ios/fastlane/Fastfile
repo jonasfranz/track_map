@@ -1,0 +1,39 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :setup do
+      setup_ci if ENV['CI']
+      match(type: 'appstore')
+  end
+
+  lane :beta do
+    setup_ci if ENV['CI']
+    match(type: 'appstore', readonly: true)
+    build_app(
+      skip_build_archive: true,
+      output_name: "track_map.ipa",
+      archive_path: "../build/ios/archive/Runner.xcarchive",
+      export_team_id: "Z48VLBM2R7"
+    )
+    upload_to_testflight(
+        ipa: "Runner.ipa",
+        skip_waiting_for_build_processing: true,
+    )
+  end
+end
