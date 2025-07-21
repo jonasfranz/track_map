@@ -32,7 +32,6 @@ platform :ios do
       export_team_id: "Z48VLBM2R7"
     )
     upload_to_testflight(
-        ipa: "Runner.ipa",
         skip_waiting_for_build_processing: true,
     )
   end

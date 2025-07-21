@@ -93,7 +93,6 @@ jobs:
         with:
           name: ios
           path: build/ios/archive/Runner.xcarchive/
-      - run: find .
       - run: bundle install && bundle exec fastlane beta
         working-directory: ios
         env:
