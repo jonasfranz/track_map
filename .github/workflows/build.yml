@@ -92,7 +92,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: ios
-      - run: cd ios && bundle install && bundle exec fastlane beta
+          path: build/ios/archive/Runner.xcarchive/
+      - run: find .
+      - run: bundle install && bundle exec fastlane beta
+        working-directory: ios
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_GIT_PRIVATE_KEY }}
