@@ -67,7 +67,7 @@ jobs:
             build/app/outputs/flutter-apk/app-release.apk*
   ios:
     needs: lint
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -85,7 +85,7 @@ jobs:
   deploy_app_store:
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     needs: ios
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
