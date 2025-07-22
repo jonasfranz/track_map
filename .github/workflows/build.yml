@@ -156,7 +156,7 @@ jobs:
           artifacts/android/flutter-apk/app-release.apk.sha1
           web.zip
     - name: Update AltStore source
-      run: dart run altstore_updater update -s altstore.json --ipa artifacts/deploy_app_store/track_map.ipa --url=${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
+      run: dart run altstore_updater update -s altstore.json --ipa artifacts/ipa/track_map.ipa --url=${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
     - uses: stefanzweifel/git-auto-commit-action@v6
       with:
         branch: main
