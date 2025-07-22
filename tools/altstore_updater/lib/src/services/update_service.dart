@@ -29,7 +29,7 @@ class UpdateService {
       minOSVersion: ipaInfos.minOSVersion,
     );
 
-    print("Add new version: $newAppVersion");
+    print("Add new version of ${ipaInfos.bundleIdentifier}: $newAppVersion");
     originalJson["apps"]
         .firstWhere((app) => app["bundleIdentifier"] == ipaInfos.bundleIdentifier)["versions"]
         .insert(0, newAppVersion.toJson());

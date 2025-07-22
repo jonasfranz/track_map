@@ -9,7 +9,7 @@
   "apps": [
     {
       "name": "TrackMap",
-      "bundleIdentifier": "de.jonasfranz.trackMap",
+      "bundleIdentifier": "de.jonasfranz.track",
       "developerName": "Jonas Franz",
       "subtitle": "OpenRailwayMap Viewer",
       "localizedDescription": "Vector-based OpenRailwayMap viewer inspired by OpenRailwayMap.app",
