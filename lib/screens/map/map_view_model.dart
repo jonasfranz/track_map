@@ -71,6 +71,10 @@ class MapViewModel {
     }
   }
 
+  Future<void> animateToLocation(LatLng location) async {
+    await _foregroundController?.animateCamera(CameraUpdate.newLatLngZoom(location, 15));
+  }
+
   void dispose() {
     _syncService.dispose();
     _viewState$.close();
