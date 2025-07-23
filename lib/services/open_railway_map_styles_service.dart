@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
+import 'package:track_map/config.dart';
 import 'package:track_map/models/map_style.dart';
 import 'package:track_map/models/themed_map_source.dart';
 import 'package:track_map/services/temp_file_service.dart';
@@ -11,8 +12,8 @@ import 'package:track_map/services/temp_file_service.dart';
 @singleton
 class OpenRailwayMapStylesService {
   OpenRailwayMapStylesService(this._dio, this._tempFileService);
-  static const _baseUrl = "https://openrailwaymap.app/style";
-  static const _originUrl = "https://openrailwaymap.app";
+  static const _baseUrl = "$_originUrl/style";
+  static const _originUrl = TrackMapConfig.backendUrl;
 
   final Dio _dio;
   final TempFileService _tempFileService;

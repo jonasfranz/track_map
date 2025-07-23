@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:track_map/config.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class StationModal extends StatelessWidget {
@@ -91,7 +92,7 @@ class _HeaderImage extends StatelessWidget {
             Logger().w("error loading image", error: error, stackTrace: stackTrace);
             return Center(child: Icon(Icons.image_not_supported));
           },
-          image: NetworkImage("https://openrailwaymap.app/api/wikidata/$wikidataId"),
+          image: NetworkImage("${TrackMapConfig.backendUrl}/api/wikidata/$wikidataId"),
           fit: BoxFit.cover,
         ),
       ),
