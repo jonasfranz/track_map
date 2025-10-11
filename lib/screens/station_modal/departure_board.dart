@@ -107,6 +107,7 @@ class _DepatureBoard extends StatelessWidget {
           ],
         ),
         ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: stoptimes.stopTimes.length,
           separatorBuilder: (context, index) => const Divider(),
