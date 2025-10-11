@@ -92,6 +92,7 @@ class _DepatureBoard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Row(
+          spacing: 4,
           children: [
             Expanded(
               child: _DepartureLocation(
@@ -148,6 +149,7 @@ class _DepartureLocation extends StatelessWidget {
         Flexible(
           fit: FlexFit.loose,
           child: DropdownButton(
+            isExpanded: true,
             items:
                 availableStations
                     .map(
