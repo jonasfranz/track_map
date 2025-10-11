@@ -93,12 +93,13 @@ class _DepatureBoard extends StatelessWidget {
       children: [
         Row(
           children: [
-            _DepartureLocation(
-              station: selectedStation,
-              availableStations: availableStations,
-              onChanged: onStationChanged,
+            Expanded(
+              child: _DepartureLocation(
+                station: selectedStation,
+                availableStations: availableStations,
+                onChanged: onStationChanged,
+              ),
             ),
-            Spacer(),
             OutlinedButton(
               onPressed: onFetchEarlierDepartures,
               child: Text("Früher"),
@@ -137,26 +138,31 @@ class _DepartureLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      textBaseline: TextBaseline.alphabetic,
       spacing: 4,
       children: [
         Text(
           "Abfahrten von: ",
           style: Theme.of(context).textTheme.labelLarge,
         ),
-        DropdownButton(
-          items:
-              availableStations
-                  .map(
-                    (station) => DropdownMenuItem(
-                      value: station,
-                      child: Text(station.name),
-                    ),
-                  )
-                  .toList(),
-          value: station,
-          isDense: true,
-          onChanged: (value) => value != null ? onChanged(value) : null,
+        Flexible(
+          fit: FlexFit.loose,
+          child: DropdownButton(
+            items:
+                availableStations
+                    .map(
+                      (station) => DropdownMenuItem(
+                        value: station,
+                        child: Text(
+                          station.name,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    )
+                    .toList(),
+            value: station,
+            isDense: true,
+            onChanged: (value) => value != null ? onChanged(value) : null,
+          ),
         ),
       ],
     );
@@ -185,7 +191,13 @@ class _DepartureTile extends StatelessWidget {
             label: Text(stoptime.displayName),
           ),
           Icon(Icons.arrow_right),
-          Text(stoptime.headsign),
+          Expanded(
+            child: Text(
+              stoptime.headsign,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

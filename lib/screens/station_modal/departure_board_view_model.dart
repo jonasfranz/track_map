@@ -34,7 +34,6 @@ class DepartureBoardViewModel {
     final stations = await _motis.getGeocodeApi().geocode(
       text: _stopName,
       place: "${_coordinates.latitude},${_coordinates.longitude}",
-      placeBias: 100,
       type: LocationType.STOP,
     );
     final result = stations.data;
