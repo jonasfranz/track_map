@@ -8,7 +8,6 @@ import 'package:rxdart/rxdart.dart';
 @injectable
 class DepartureBoardViewModel {
   DepartureBoardViewModel(
-    @factoryParam this._stopName,
     @factoryParam this._coordinates,
     this._motis,
   ) {
@@ -17,7 +16,6 @@ class DepartureBoardViewModel {
 
   static const _numberOfDepartures = 3;
 
-  final String _stopName;
   final LatLng _coordinates;
 
   final Motis _motis;
@@ -31,8 +29,7 @@ class DepartureBoardViewModel {
   late final Stream<Stoptimes200Response?> stopTimes$ = _stopTimes$.stream;
 
   Future<List<Match>?> _fetchPossibleStations() async {
-    final stations = await _motis.getGeocodeApi().geocode(
-      text: _stopName,
+    final stations = await _motis.getGeocodeApi().reverseGeocode(
       place: "${_coordinates.latitude},${_coordinates.longitude}",
       type: LocationType.STOP,
     );

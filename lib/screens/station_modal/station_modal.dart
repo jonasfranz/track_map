@@ -65,7 +65,6 @@ class StationModal extends StatelessWidget {
                   ],
                 ),
                 DepartureBoard(
-                  stationName: properties["name"],
                   coordinates: coordinates,
                 ),
               ],

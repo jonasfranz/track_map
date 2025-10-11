@@ -53,8 +53,8 @@ class MapView extends HookWidget {
                         context: context,
                         builder:
                             (context) => StationModal(
-                              properties: properties,
-                              coordinates: coordinates,
+                              properties: properties.$2,
+                              coordinates: properties.$1 ?? coordinates,
                             ),
                       );
                     }

@@ -91,7 +91,7 @@ class MapViewModel {
     );
   }
 
-  Future<Map<String, dynamic>?> resolveStationProperties(
+  Future<(LatLng?, Map<String, dynamic>)?> resolveStationProperties(
     Point<double> point,
     LatLng coordinates,
   ) async {
@@ -103,8 +103,13 @@ class MapViewModel {
     if (features == null || features.isEmpty) return null;
     for (final feature in features) {
       final properties = feature["properties"];
-      if (properties["name"] == null) return null;
-      return properties;
+      if (properties["name"] == null) continue;
+      final List<dynamic>? coordinates = feature["geometry"]["coordinates"];
+      if (coordinates == null || coordinates.length < 2) continue;
+      return (
+        LatLng(coordinates[1], coordinates[0]),
+        properties as Map<String, dynamic>,
+      );
     }
     return null;
   }

@@ -42,12 +42,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i624.TempFileService>(() => trackMapModule.tempFileService);
     gh.singleton<_i95.SearchApi>(() => trackMapModule.searchApi);
     gh.singleton<_i1034.Motis>(() => trackMapModule.motis);
-    gh.factoryParam<_i52.DepartureBoardViewModel, String, _i276.LatLng>(
-      (_stopName, _coordinates) => _i52.DepartureBoardViewModel(
-        _stopName,
-        _coordinates,
-        gh<_i1034.Motis>(),
-      ),
+    gh.factoryParam<_i52.DepartureBoardViewModel, _i276.LatLng, dynamic>(
+      (_coordinates, _) =>
+          _i52.DepartureBoardViewModel(_coordinates, gh<_i1034.Motis>()),
     );
     gh.singleton<_i952.OpenRailwayMapStylesService>(
       () => _i952.OpenRailwayMapStylesService(

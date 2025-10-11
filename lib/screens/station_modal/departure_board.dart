@@ -12,19 +12,15 @@ import '../../dependency_injection.dart';
 class DepartureBoard extends HookWidget {
   const DepartureBoard({
     super.key,
-    required this.stationName,
     required this.coordinates,
   });
-
-  final String stationName;
   final LatLng coordinates;
 
   @override
   Widget build(BuildContext context) {
     final viewModel = useMemoized<DepartureBoardViewModel>(
       () => getIt(
-        param1: stationName,
-        param2: coordinates,
+        param1: coordinates,
       ),
     );
     useEffect(() => viewModel.dispose, [viewModel]);
@@ -59,6 +55,7 @@ class DepartureBoard extends HookWidget {
       AsyncSnapshot(data: null, error: final error?) => Center(
         child: Text(error.toString()),
       ),
+      AsyncSnapshot(data: null, error: null) => SizedBox(),
       _ => Center(
         child: CircularProgressIndicator.adaptive(),
       ),
@@ -224,13 +221,14 @@ class _DepartureTime extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         if (stoptime.place.departure case final departure?)
-          Text(
-            departure.toTime(),
-            style: TextStyle(
-              color:
-                  stoptime.isSignificantlyDelayed ? Colors.red : Colors.green,
+          if (stoptime.realTime)
+            Text(
+              departure.toTime(),
+              style: TextStyle(
+                color:
+                    stoptime.isSignificantlyDelayed ? Colors.red : Colors.green,
+              ),
             ),
-          ),
       ],
     );
   }
