@@ -1,0 +1,237 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:intl/intl.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
+import 'package:motis/motis.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:track_map/screens/station_modal/departure_board_view_model.dart';
+import 'package:track_map/screens/station_modal/mode_icon.dart';
+
+import '../../dependency_injection.dart';
+
+class DepartureBoard extends HookWidget {
+  const DepartureBoard({
+    super.key,
+    required this.stationName,
+    required this.coordinates,
+  });
+
+  final String stationName;
+  final LatLng coordinates;
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = useMemoized<DepartureBoardViewModel>(
+      () => getIt(
+        param1: stationName,
+        param2: coordinates,
+      ),
+    );
+    useEffect(() => viewModel.dispose, [viewModel]);
+    final result = useStream(
+      CombineLatestStream.combine3(
+        viewModel.stopTimes$,
+        viewModel.stations$,
+        viewModel.selectedStation$,
+        (stopTimes, stations, selectedStation) => (
+          stopTimes: stopTimes,
+          stations: stations,
+          selectedStation: selectedStation,
+        ),
+      ),
+    );
+    return switch (result) {
+      AsyncSnapshot(
+        data: (
+          selectedStation: final selectedStation,
+          stations: final stations?,
+          stopTimes: final stopTimes?,
+        ),
+      ) =>
+        _DepatureBoard(
+          stoptimes: stopTimes,
+          onFetchEarlierDepartures: viewModel.fetchEarlierDepartures,
+          onFetchLaterDepartures: viewModel.fetchLaterDepartures,
+          selectedStation: selectedStation,
+          availableStations: stations,
+          onStationChanged: viewModel.changeStation,
+        ),
+      AsyncSnapshot(data: null, error: final error?) => Center(
+        child: Text(error.toString()),
+      ),
+      _ => Center(
+        child: CircularProgressIndicator.adaptive(),
+      ),
+    };
+  }
+}
+
+class _DepatureBoard extends StatelessWidget {
+  const _DepatureBoard({
+    required this.stoptimes,
+    required this.onFetchEarlierDepartures,
+    required this.onFetchLaterDepartures,
+    required this.selectedStation,
+    required this.availableStations,
+    required this.onStationChanged,
+  });
+
+  final VoidCallback onFetchEarlierDepartures;
+  final VoidCallback onFetchLaterDepartures;
+
+  final Match selectedStation;
+  final List<Match> availableStations;
+  final Stoptimes200Response stoptimes;
+
+  final ValueChanged<Match> onStationChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 8,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          children: [
+            _DepartureLocation(
+              station: selectedStation,
+              availableStations: availableStations,
+              onChanged: onStationChanged,
+            ),
+            Spacer(),
+            OutlinedButton(
+              onPressed: onFetchEarlierDepartures,
+              child: Text("Früher"),
+            ),
+          ],
+        ),
+        ListView.separated(
+          shrinkWrap: true,
+          itemCount: stoptimes.stopTimes.length,
+          separatorBuilder: (context, index) => const Divider(),
+          itemBuilder: (context, index) {
+            final stoptime = stoptimes.stopTimes[index];
+            return _DepartureTile(stoptime: stoptime);
+          },
+        ),
+        OutlinedButton(
+          onPressed: onFetchLaterDepartures,
+          child: Text("Später"),
+        ),
+      ],
+    );
+  }
+}
+
+class _DepartureLocation extends StatelessWidget {
+  const _DepartureLocation({
+    required this.station,
+    required this.availableStations,
+    required this.onChanged,
+  });
+
+  final Match station;
+  final List<Match> availableStations;
+  final ValueChanged<Match> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      textBaseline: TextBaseline.alphabetic,
+      spacing: 4,
+      children: [
+        Text(
+          "Abfahrten von: ",
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+        DropdownButton(
+          items:
+              availableStations
+                  .map(
+                    (station) => DropdownMenuItem(
+                      value: station,
+                      child: Text(station.name),
+                    ),
+                  )
+                  .toList(),
+          value: station,
+          isDense: true,
+          onChanged: (value) => value != null ? onChanged(value) : null,
+        ),
+      ],
+    );
+  }
+}
+
+class _DepartureTile extends StatelessWidget {
+  const _DepartureTile({
+    required this.stoptime,
+  });
+
+  final StopTime stoptime;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: _DepartureTime(stoptime: stoptime),
+      trailing: switch (stoptime.place.track) {
+        final track? => Text("Gl. $track"),
+        _ => null,
+      },
+      title: Row(
+        children: [
+          Chip(
+            avatar: Icon(stoptime.mode.icon),
+            label: Text(stoptime.displayName),
+          ),
+          Icon(Icons.arrow_right),
+          Text(stoptime.headsign),
+        ],
+      ),
+    );
+  }
+}
+
+class _DepartureTime extends StatelessWidget {
+  const _DepartureTime({
+    required this.stoptime,
+  });
+
+  final StopTime stoptime;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          stoptime.place.scheduledDeparture?.toTime() ?? "--:--",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        if (stoptime.place.departure case final departure?)
+          Text(
+            departure.toTime(),
+            style: TextStyle(
+              color:
+                  stoptime.isSignificantlyDelayed ? Colors.red : Colors.green,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+extension _StopDetails on StopTime {
+  bool get isSignificantlyDelayed => switch (place) {
+    Place(
+      departure: final departure?,
+      scheduledDeparture: final scheduledDeparture?,
+    ) =>
+      departure.difference(scheduledDeparture).inMinutes > 5,
+    _ => false,
+  };
+}
+
+extension _ToTime on DateTime {
+  String toTime() => DateFormat.Hm().format(this);
+}

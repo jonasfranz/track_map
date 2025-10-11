@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:motis/motis.dart';
 import 'package:openrailwaymap_api/openrailwaymap_api.dart';
 import 'package:track_map/services/temp_file_service.dart';
 
@@ -16,4 +17,7 @@ abstract class TrackMapModule {
 
   @singleton
   SearchApi get searchApi => OpenrailwaymapApi().getSearchApi();
+
+  @singleton
+  Motis get motis => Motis();
 }

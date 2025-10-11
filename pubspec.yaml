@@ -48,6 +48,9 @@ dependencies:
   url_launcher: ^6.3.2
   openrailwaymap_api:
     path: openrailwaymap_api/
+  motis:
+    git: https://github.com/jonasfranz/motis_dart.git
+  intl: ^0.20.2
 
 dev_dependencies:
   altstore_updater:

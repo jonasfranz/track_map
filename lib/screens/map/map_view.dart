@@ -52,7 +52,10 @@ class MapView extends HookWidget {
                       await showModalBottomSheet(
                         context: context,
                         builder:
-                            (context) => StationModal(properties: properties),
+                            (context) => StationModal(
+                              properties: properties,
+                              coordinates: coordinates,
+                            ),
                       );
                     }
                   },

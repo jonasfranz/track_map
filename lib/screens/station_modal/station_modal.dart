@@ -1,59 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:track_map/config.dart';
+import 'package:track_map/screens/station_modal/departure_board.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class StationModal extends StatelessWidget {
-  const StationModal({super.key, required this.properties});
+  const StationModal({
+    super.key,
+    required this.properties,
+    required this.coordinates,
+  });
 
   final Map<String, dynamic> properties;
+  final LatLng coordinates;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 8,
-      children: [
-        if (properties["wikidata"] case final String wikidataId?)
-          _HeaderImage(wikidataId: wikidataId)
-        else
-          SizedBox(height: 16),
-        SafeArea(
-          minimum: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-          ).copyWith(bottom: 16),
-          child: Row(
-            spacing: 8,
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 8,
+        children: [
+          if (properties["wikidata"] case final String wikidataId?)
+            _HeaderImage(wikidataId: wikidataId)
+          else
+            SizedBox(height: 16),
+          SafeArea(
+            minimum: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+            ).copyWith(bottom: 16),
+            child: Column(
+              spacing: 4,
+              children: [
+                Row(
+                  spacing: 8,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
                   children: [
-                    _StationTitle(properties: properties),
-                    if (properties["operator"] case final String operator?)
-                      Text(
-                        operator,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _StationTitle(properties: properties),
+                          if (properties["operator"]
+                              case final String operator?)
+                            Text(
+                              operator,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                        ],
+                      ),
+                    ),
+                    if (properties["wikipedia"] case final String wikipedia?)
+                      IconButton(
+                        onPressed:
+                            () => launchUrlString(
+                              "https://en.wikipedia.org/wiki/$wikipedia",
+                              mode: LaunchMode.inAppBrowserView,
+                            ),
+                        icon: Icon(Icons.chrome_reader_mode),
                       ),
                   ],
                 ),
-              ),
-              if (properties["wikipedia"] case final String wikipedia?)
-                IconButton(
-                  onPressed:
-                      () => launchUrlString(
-                        "https://en.wikipedia.org/wiki/$wikipedia",
-                        mode: LaunchMode.inAppBrowserView,
-                      ),
-                  icon: Icon(Icons.chrome_reader_mode),
+                DepartureBoard(
+                  stationName: properties["name"],
+                  coordinates: coordinates,
                 ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
