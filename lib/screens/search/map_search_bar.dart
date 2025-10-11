@@ -21,7 +21,8 @@ class MapSearchBar extends HookWidget {
     final viewController = useMemoized<MapSearchBarController>(getIt.call);
     final searchController = useSearchController();
     useEffect(() {
-      void listenToQuery() => viewController.changeSearchQuery(searchController.text);
+      void listenToQuery() =>
+          viewController.changeSearchQuery(searchController.text);
       searchController.addListener(listenToQuery);
       return () => searchController.removeListener(listenToQuery);
     }, [viewController, searchController]);
@@ -42,7 +43,10 @@ class MapSearchBar extends HookWidget {
                   focusNode: focusNode,
                   controller: controller,
                   trailing: [
-                    IconButton(onPressed: onGoToCurrentLocation, icon: Icon(Icons.my_location)),
+                    IconButton(
+                      onPressed: onGoToCurrentLocation,
+                      icon: Icon(Icons.my_location),
+                    ),
                   ],
                   leading: const Icon(Icons.search),
 

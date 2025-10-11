@@ -69,24 +69,32 @@ class OpenRailwayMapStylesService {
     );
   }
 
-  Map<String, dynamic> _rewriteOriginLocation(Map<String, dynamic> style) => style.map(
-    (key, value) => switch ((key, value)) {
-      ("glyphs", _) => MapEntry(key, "$_originUrl$value"),
-      (_, Map<String, dynamic> value) => MapEntry(key, _rewriteOriginLocationInMap(value)),
-      (_, List value) => MapEntry(key, _rewriteOriginLocationInList(value)),
-      (_, _) => MapEntry(key, value),
-    },
-  );
+  Map<String, dynamic> _rewriteOriginLocation(Map<String, dynamic> style) =>
+      style.map(
+        (key, value) => switch ((key, value)) {
+          ("glyphs", _) => MapEntry(key, "$_originUrl$value"),
+          (_, Map<String, dynamic> value) => MapEntry(
+            key,
+            _rewriteOriginLocationInMap(value),
+          ),
+          (_, List value) => MapEntry(key, _rewriteOriginLocationInList(value)),
+          (_, _) => MapEntry(key, value),
+        },
+      );
 
   Map<String, dynamic> _rewriteUrlObject(Map<String, dynamic> value) {
     final String? url = value["url"];
-    return {...value, if (url != null) "url": url.startsWith("/") ? "$_originUrl$url" : url};
+    return {
+      ...value,
+      if (url != null) "url": url.startsWith("/") ? "$_originUrl$url" : url,
+    };
   }
 
-  Map<String, dynamic> _rewriteOriginLocationInMap(Map<String, dynamic> sources) =>
-      sources.map((key, value) {
-        return MapEntry(key, _rewriteUrlObject(value));
-      });
+  Map<String, dynamic> _rewriteOriginLocationInMap(
+    Map<String, dynamic> sources,
+  ) => sources.map((key, value) {
+    return MapEntry(key, _rewriteUrlObject(value));
+  });
   List _rewriteOriginLocationInList(Iterable sources) =>
       sources.map((value) {
         if (value is Map<String, dynamic>) {

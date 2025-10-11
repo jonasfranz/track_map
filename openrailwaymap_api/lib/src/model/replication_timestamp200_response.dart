@@ -11,26 +11,36 @@ part 'replication_timestamp200_response.g.dart';
 /// ReplicationTimestamp200Response
 ///
 /// Properties:
-/// * [replicationTimestamp] 
+/// * [replicationTimestamp]
 @BuiltValue()
-abstract class ReplicationTimestamp200Response implements Built<ReplicationTimestamp200Response, ReplicationTimestamp200ResponseBuilder> {
+abstract class ReplicationTimestamp200Response
+    implements
+        Built<ReplicationTimestamp200Response,
+            ReplicationTimestamp200ResponseBuilder> {
   @BuiltValueField(wireName: r'replication_timestamp')
   String? get replicationTimestamp;
 
   ReplicationTimestamp200Response._();
 
-  factory ReplicationTimestamp200Response([void updates(ReplicationTimestamp200ResponseBuilder b)]) = _$ReplicationTimestamp200Response;
+  factory ReplicationTimestamp200Response(
+          [void updates(ReplicationTimestamp200ResponseBuilder b)]) =
+      _$ReplicationTimestamp200Response;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(ReplicationTimestamp200ResponseBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<ReplicationTimestamp200Response> get serializer => _$ReplicationTimestamp200ResponseSerializer();
+  static Serializer<ReplicationTimestamp200Response> get serializer =>
+      _$ReplicationTimestamp200ResponseSerializer();
 }
 
-class _$ReplicationTimestamp200ResponseSerializer implements PrimitiveSerializer<ReplicationTimestamp200Response> {
+class _$ReplicationTimestamp200ResponseSerializer
+    implements PrimitiveSerializer<ReplicationTimestamp200Response> {
   @override
-  final Iterable<Type> types = const [ReplicationTimestamp200Response, _$ReplicationTimestamp200Response];
+  final Iterable<Type> types = const [
+    ReplicationTimestamp200Response,
+    _$ReplicationTimestamp200Response
+  ];
 
   @override
   final String wireName = r'ReplicationTimestamp200Response';
@@ -55,7 +65,9 @@ class _$ReplicationTimestamp200ResponseSerializer implements PrimitiveSerializer
     ReplicationTimestamp200Response object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -105,4 +117,3 @@ class _$ReplicationTimestamp200ResponseSerializer implements PrimitiveSerializer
     return result.build();
   }
 }
-

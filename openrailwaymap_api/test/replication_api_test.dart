@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:openrailwaymap_api/openrailwaymap_api.dart';
 
-
 /// tests for ReplicationApi
 void main() {
   final instance = OpenrailwaymapApi().getReplicationApi();
@@ -15,6 +14,5 @@ void main() {
     test('test replicationTimestamp', () async {
       // TODO
     });
-
   });
 }

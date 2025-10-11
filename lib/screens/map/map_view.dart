@@ -21,10 +21,14 @@ class MapView extends HookWidget {
     final viewModel = useMemoized<MapViewModel>(getIt.call);
     useEffect(() => viewModel.dispose, [viewModel]);
     final viewState =
-        useStream(viewModel.viewState$, initialData: MapViewState.loading()).requireData;
+        useStream(
+          viewModel.viewState$,
+          initialData: MapViewState.loading(),
+        ).requireData;
 
     return viewState.map(
-      loading: (_) => Scaffold(body: Center(child: CircularProgressIndicator())),
+      loading:
+          (_) => Scaffold(body: Center(child: CircularProgressIndicator())),
       ready:
           (state) => Scaffold(
             floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
@@ -40,11 +44,15 @@ class MapView extends HookWidget {
                   initialCameraPosition: state.initialCameraPosition,
                   onMapCreated: viewModel.setForegroundController,
                   onMapClick: (point, coordinates) async {
-                    final properties = await viewModel.resolveStationProperties(point, coordinates);
+                    final properties = await viewModel.resolveStationProperties(
+                      point,
+                      coordinates,
+                    );
                     if (properties != null && context.mounted) {
                       await showModalBottomSheet(
                         context: context,
-                        builder: (context) => StationModal(properties: properties),
+                        builder:
+                            (context) => StationModal(properties: properties),
                       );
                     }
                   },
@@ -52,7 +60,8 @@ class MapView extends HookWidget {
                   trackCameraPosition: true,
                   myLocationEnabled: true,
                   compassEnabled: false,
-                  attributionButtonPosition: AttributionButtonPosition.bottomRight,
+                  attributionButtonPosition:
+                      AttributionButtonPosition.bottomRight,
                   attributionButtonMargins: Point(16, 16),
                 ),
                 _MapStyleSelection(
@@ -101,7 +110,9 @@ class _MapStyleSelection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SegmentedButton(
-              style: SegmentedButton.styleFrom(backgroundColor: Theme.of(context).canvasColor),
+              style: SegmentedButton.styleFrom(
+                backgroundColor: Theme.of(context).canvasColor,
+              ),
               segments: availableStyles.map(MapStyleSegmentButton.new).toList(),
               selected: {selectedStyle},
               showSelectedIcon: false,

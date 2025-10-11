@@ -5,8 +5,9 @@ import 'package:altstore_updater/src/models/app_version.dart';
 import 'package:altstore_updater/src/services/ipa_parsing_service.dart';
 
 class UpdateService {
-  UpdateService({IPAParsingService ipaParsingService = const IPAParsingService()})
-    : _ipaParsingService = ipaParsingService;
+  UpdateService({
+    IPAParsingService ipaParsingService = const IPAParsingService(),
+  }) : _ipaParsingService = ipaParsingService;
 
   final IPAParsingService _ipaParsingService;
 
@@ -31,7 +32,9 @@ class UpdateService {
 
     print("Add new version of ${ipaInfos.bundleIdentifier}: $newAppVersion");
     originalJson["apps"]
-        .firstWhere((app) => app["bundleIdentifier"] == ipaInfos.bundleIdentifier)["versions"]
+        .firstWhere(
+          (app) => app["bundleIdentifier"] == ipaInfos.bundleIdentifier,
+        )["versions"]
         .insert(0, newAppVersion.toJson());
     final encoder = JsonEncoder.withIndent('  ');
     originalFile.writeAsString(encoder.convert(originalJson));

@@ -17,4 +17,3 @@ export 'package:openrailwaymap_api/src/api/wikidata_api.dart';
 export 'package:openrailwaymap_api/src/model/replication_timestamp200_response.dart';
 export 'package:openrailwaymap_api/src/model/search_facilities200_response_inner.dart';
 export 'package:openrailwaymap_api/src/model/search_milestones200_response_inner.dart';
-

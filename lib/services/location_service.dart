@@ -30,10 +30,11 @@ class LocationService {
     if (!hasPermission) return null;
     final location = await _location.getLocation();
     return switch (location) {
-      LocationData(longitude: final longitude?, latitude: final latitude?) => LatLng(
-        latitude,
-        longitude,
-      ),
+      LocationData(longitude: final longitude?, latitude: final latitude?) =>
+        LatLng(
+          latitude,
+          longitude,
+        ),
       _ => null,
     };
   }

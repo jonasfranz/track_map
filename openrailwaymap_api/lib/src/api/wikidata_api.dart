@@ -38,8 +38,10 @@ class WikidataApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/wikidata/{entity}'.replaceAll('{' r'entity' '}',
-        encodeQueryParameter(_serializers, entity, const FullType(String)).toString());
+    final _path = r'/api/wikidata/{entity}'.replaceAll(
+        '{' r'entity' '}',
+        encodeQueryParameter(_serializers, entity, const FullType(String))
+            .toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{

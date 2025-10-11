@@ -17,37 +17,37 @@ void main() {
       // TODO
     });
 
-    // OSM node ID 
+    // OSM node ID
     // int osmId
     test('to test the property `osmId`', () async {
       // TODO
     });
 
-    // Reference number of the railway line the feature is located on. 
+    // Reference number of the railway line the feature is located on.
     // String lineRef
     test('to test the property `lineRef`', () async {
       // TODO
     });
 
-    // Reference number of the feature. 
+    // Reference number of the feature.
     // String milestoneRef
     test('to test the property `milestoneRef`', () async {
       // TODO
     });
 
-    // operator of the infrastructure 
+    // operator of the infrastructure
     // String operator_
     test('to test the property `operator_`', () async {
       // TODO
     });
 
-    // type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`. 
+    // type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`.
     // String railway
     test('to test the property `railway`', () async {
       // TODO
     });
 
-    // Mileage of the feature 
+    // Mileage of the feature
     // String position
     test('to test the property `position`', () async {
       // TODO
@@ -87,6 +87,5 @@ void main() {
     test('to test the property `description`', () async {
       // TODO
     });
-
   });
 }

@@ -9,7 +9,10 @@ class TempFileServiceImpl implements TempFileService {
 
   @override
   Future<String> writeToFile(String name, String content) async {
-    final blob = Blob([content.toJS].toJS, BlobPropertyBag(type: "application/json"));
+    final blob = Blob(
+      [content.toJS].toJS,
+      BlobPropertyBag(type: "application/json"),
+    );
     return URL.createObjectURL(blob);
   }
 

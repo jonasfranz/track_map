@@ -12,27 +12,30 @@ part 'search_facilities200_response_inner.g.dart';
 /// SearchFacilities200ResponseInner
 ///
 /// Properties:
-/// * [latitude] 
-/// * [longitude] 
-/// * [osmIds] 
-/// * [osmTypes] 
-/// * [name] 
-/// * [railway] 
-/// * [station] 
-/// * [railwayRef] 
-/// * [uicRef] 
-/// * [operator_] 
-/// * [network] 
-/// * [wikidata] 
-/// * [wikimediaCommons] 
-/// * [image] 
-/// * [mapillary] 
-/// * [wikipedia] 
-/// * [note] 
-/// * [description] 
-/// * [rank] - an importance rank calculated by taking the public transport route relations into account using this station/halt 
+/// * [latitude]
+/// * [longitude]
+/// * [osmIds]
+/// * [osmTypes]
+/// * [name]
+/// * [railway]
+/// * [station]
+/// * [railwayRef]
+/// * [uicRef]
+/// * [operator_]
+/// * [network]
+/// * [wikidata]
+/// * [wikimediaCommons]
+/// * [image]
+/// * [mapillary]
+/// * [wikipedia]
+/// * [note]
+/// * [description]
+/// * [rank] - an importance rank calculated by taking the public transport route relations into account using this station/halt
 @BuiltValue()
-abstract class SearchFacilities200ResponseInner implements Built<SearchFacilities200ResponseInner, SearchFacilities200ResponseInnerBuilder> {
+abstract class SearchFacilities200ResponseInner
+    implements
+        Built<SearchFacilities200ResponseInner,
+            SearchFacilities200ResponseInnerBuilder> {
   @BuiltValueField(wireName: r'latitude')
   num? get latitude;
 
@@ -88,24 +91,31 @@ abstract class SearchFacilities200ResponseInner implements Built<SearchFacilitie
   @BuiltValueField(wireName: r'description')
   BuiltList<String>? get description;
 
-  /// an importance rank calculated by taking the public transport route relations into account using this station/halt 
+  /// an importance rank calculated by taking the public transport route relations into account using this station/halt
   @BuiltValueField(wireName: r'rank')
   int? get rank;
 
   SearchFacilities200ResponseInner._();
 
-  factory SearchFacilities200ResponseInner([void updates(SearchFacilities200ResponseInnerBuilder b)]) = _$SearchFacilities200ResponseInner;
+  factory SearchFacilities200ResponseInner(
+          [void updates(SearchFacilities200ResponseInnerBuilder b)]) =
+      _$SearchFacilities200ResponseInner;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(SearchFacilities200ResponseInnerBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<SearchFacilities200ResponseInner> get serializer => _$SearchFacilities200ResponseInnerSerializer();
+  static Serializer<SearchFacilities200ResponseInner> get serializer =>
+      _$SearchFacilities200ResponseInnerSerializer();
 }
 
-class _$SearchFacilities200ResponseInnerSerializer implements PrimitiveSerializer<SearchFacilities200ResponseInner> {
+class _$SearchFacilities200ResponseInnerSerializer
+    implements PrimitiveSerializer<SearchFacilities200ResponseInner> {
   @override
-  final Iterable<Type> types = const [SearchFacilities200ResponseInner, _$SearchFacilities200ResponseInner];
+  final Iterable<Type> types = const [
+    SearchFacilities200ResponseInner,
+    _$SearchFacilities200ResponseInner
+  ];
 
   @override
   final String wireName = r'SearchFacilities200ResponseInner';
@@ -140,7 +150,8 @@ class _$SearchFacilities200ResponseInnerSerializer implements PrimitiveSerialize
       yield r'osm_types';
       yield serializers.serialize(
         object.osmTypes,
-        specifiedType: const FullType(BuiltList, [FullType(SearchFacilities200ResponseInnerOsmTypesEnum)]),
+        specifiedType: const FullType(BuiltList,
+            [FullType(SearchFacilities200ResponseInnerOsmTypesEnum)]),
       );
     }
     if (object.name != null) {
@@ -256,7 +267,9 @@ class _$SearchFacilities200ResponseInnerSerializer implements PrimitiveSerialize
     SearchFacilities200ResponseInner object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -295,7 +308,8 @@ class _$SearchFacilities200ResponseInnerSerializer implements PrimitiveSerialize
         case r'osm_types':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(SearchFacilities200ResponseInnerOsmTypesEnum)]),
+            specifiedType: const FullType(BuiltList,
+                [FullType(SearchFacilities200ResponseInnerOsmTypesEnum)]),
           ) as BuiltList<SearchFacilities200ResponseInnerOsmTypesEnum>;
           result.osmTypes.replace(valueDes);
           break;
@@ -434,19 +448,25 @@ class _$SearchFacilities200ResponseInnerSerializer implements PrimitiveSerialize
 }
 
 class SearchFacilities200ResponseInnerOsmTypesEnum extends EnumClass {
-
-  /// The type of OSM object, same order as the IDs 
+  /// The type of OSM object, same order as the IDs
   @BuiltValueEnumConst(wireName: r'N')
-  static const SearchFacilities200ResponseInnerOsmTypesEnum N = _$searchFacilities200ResponseInnerOsmTypesEnum_N;
-  /// The type of OSM object, same order as the IDs 
+  static const SearchFacilities200ResponseInnerOsmTypesEnum N =
+      _$searchFacilities200ResponseInnerOsmTypesEnum_N;
+
+  /// The type of OSM object, same order as the IDs
   @BuiltValueEnumConst(wireName: r'W')
-  static const SearchFacilities200ResponseInnerOsmTypesEnum W = _$searchFacilities200ResponseInnerOsmTypesEnum_W;
+  static const SearchFacilities200ResponseInnerOsmTypesEnum W =
+      _$searchFacilities200ResponseInnerOsmTypesEnum_W;
 
-  static Serializer<SearchFacilities200ResponseInnerOsmTypesEnum> get serializer => _$searchFacilities200ResponseInnerOsmTypesEnumSerializer;
+  static Serializer<SearchFacilities200ResponseInnerOsmTypesEnum>
+      get serializer =>
+          _$searchFacilities200ResponseInnerOsmTypesEnumSerializer;
 
-  const SearchFacilities200ResponseInnerOsmTypesEnum._(String name): super(name);
+  const SearchFacilities200ResponseInnerOsmTypesEnum._(String name)
+      : super(name);
 
-  static BuiltSet<SearchFacilities200ResponseInnerOsmTypesEnum> get values => _$searchFacilities200ResponseInnerOsmTypesEnumValues;
-  static SearchFacilities200ResponseInnerOsmTypesEnum valueOf(String name) => _$searchFacilities200ResponseInnerOsmTypesEnumValueOf(name);
+  static BuiltSet<SearchFacilities200ResponseInnerOsmTypesEnum> get values =>
+      _$searchFacilities200ResponseInnerOsmTypesEnumValues;
+  static SearchFacilities200ResponseInnerOsmTypesEnum valueOf(String name) =>
+      _$searchFacilities200ResponseInnerOsmTypesEnumValueOf(name);
 }
-

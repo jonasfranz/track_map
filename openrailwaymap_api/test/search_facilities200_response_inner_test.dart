@@ -97,11 +97,10 @@ void main() {
       // TODO
     });
 
-    // an importance rank calculated by taking the public transport route relations into account using this station/halt 
+    // an importance rank calculated by taking the public transport route relations into account using this station/halt
     // int rank
     test('to test the property `rank`', () async {
       // TODO
     });
-
   });
 }

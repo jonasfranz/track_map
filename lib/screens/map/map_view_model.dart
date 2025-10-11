@@ -67,12 +67,16 @@ class MapViewModel {
         await _foregroundController?.requestMyLocationLatLng() ??
         await _locationService.findCurrentLocation();
     if (currentLocation != null) {
-      await _foregroundController?.animateCamera(CameraUpdate.newLatLng(currentLocation));
+      await _foregroundController?.animateCamera(
+        CameraUpdate.newLatLng(currentLocation),
+      );
     }
   }
 
   Future<void> animateToLocation(LatLng location) async {
-    await _foregroundController?.animateCamera(CameraUpdate.newLatLngZoom(location, 15));
+    await _foregroundController?.animateCamera(
+      CameraUpdate.newLatLngZoom(location, 15),
+    );
   }
 
   void dispose() {

@@ -11,50 +11,53 @@ part 'search_milestones200_response_inner.g.dart';
 /// SearchMilestones200ResponseInner
 ///
 /// Properties:
-/// * [latitude] 
-/// * [longitude] 
-/// * [osmId] - OSM node ID 
-/// * [lineRef] - Reference number of the railway line the feature is located on. 
-/// * [milestoneRef] - Reference number of the feature. 
-/// * [operator_] - operator of the infrastructure 
-/// * [railway] - type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`. 
-/// * [position] - Mileage of the feature 
-/// * [wikidata] 
-/// * [wikimediaCommons] 
-/// * [image] 
-/// * [mapillary] 
-/// * [wikipedia] 
-/// * [note] 
-/// * [description] 
+/// * [latitude]
+/// * [longitude]
+/// * [osmId] - OSM node ID
+/// * [lineRef] - Reference number of the railway line the feature is located on.
+/// * [milestoneRef] - Reference number of the feature.
+/// * [operator_] - operator of the infrastructure
+/// * [railway] - type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`.
+/// * [position] - Mileage of the feature
+/// * [wikidata]
+/// * [wikimediaCommons]
+/// * [image]
+/// * [mapillary]
+/// * [wikipedia]
+/// * [note]
+/// * [description]
 @BuiltValue()
-abstract class SearchMilestones200ResponseInner implements Built<SearchMilestones200ResponseInner, SearchMilestones200ResponseInnerBuilder> {
+abstract class SearchMilestones200ResponseInner
+    implements
+        Built<SearchMilestones200ResponseInner,
+            SearchMilestones200ResponseInnerBuilder> {
   @BuiltValueField(wireName: r'latitude')
   num? get latitude;
 
   @BuiltValueField(wireName: r'longitude')
   num? get longitude;
 
-  /// OSM node ID 
+  /// OSM node ID
   @BuiltValueField(wireName: r'osm_id')
   int? get osmId;
 
-  /// Reference number of the railway line the feature is located on. 
+  /// Reference number of the railway line the feature is located on.
   @BuiltValueField(wireName: r'line_ref')
   String? get lineRef;
 
-  /// Reference number of the feature. 
+  /// Reference number of the feature.
   @BuiltValueField(wireName: r'milestone_ref')
   String? get milestoneRef;
 
-  /// operator of the infrastructure 
+  /// operator of the infrastructure
   @BuiltValueField(wireName: r'operator')
   String? get operator_;
 
-  /// type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`. 
+  /// type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`.
   @BuiltValueField(wireName: r'railway')
   String? get railway;
 
-  /// Mileage of the feature 
+  /// Mileage of the feature
   @BuiltValueField(wireName: r'position')
   String? get position;
 
@@ -81,18 +84,25 @@ abstract class SearchMilestones200ResponseInner implements Built<SearchMilestone
 
   SearchMilestones200ResponseInner._();
 
-  factory SearchMilestones200ResponseInner([void updates(SearchMilestones200ResponseInnerBuilder b)]) = _$SearchMilestones200ResponseInner;
+  factory SearchMilestones200ResponseInner(
+          [void updates(SearchMilestones200ResponseInnerBuilder b)]) =
+      _$SearchMilestones200ResponseInner;
 
   @BuiltValueHook(initializeBuilder: true)
   static void _defaults(SearchMilestones200ResponseInnerBuilder b) => b;
 
   @BuiltValueSerializer(custom: true)
-  static Serializer<SearchMilestones200ResponseInner> get serializer => _$SearchMilestones200ResponseInnerSerializer();
+  static Serializer<SearchMilestones200ResponseInner> get serializer =>
+      _$SearchMilestones200ResponseInnerSerializer();
 }
 
-class _$SearchMilestones200ResponseInnerSerializer implements PrimitiveSerializer<SearchMilestones200ResponseInner> {
+class _$SearchMilestones200ResponseInnerSerializer
+    implements PrimitiveSerializer<SearchMilestones200ResponseInner> {
   @override
-  final Iterable<Type> types = const [SearchMilestones200ResponseInner, _$SearchMilestones200ResponseInner];
+  final Iterable<Type> types = const [
+    SearchMilestones200ResponseInner,
+    _$SearchMilestones200ResponseInner
+  ];
 
   @override
   final String wireName = r'SearchMilestones200ResponseInner';
@@ -215,7 +225,9 @@ class _$SearchMilestones200ResponseInnerSerializer implements PrimitiveSerialize
     SearchMilestones200ResponseInner object, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+    return _serializeProperties(serializers, object,
+            specifiedType: specifiedType)
+        .toList();
   }
 
   void _deserializeProperties(
@@ -363,4 +375,3 @@ class _$SearchMilestones200ResponseInnerSerializer implements PrimitiveSerialize
     return result.build();
   }
 }
-

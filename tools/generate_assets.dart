@@ -19,5 +19,8 @@ class AssetFileService implements TempFileService {
 }
 
 void main() async {
-  await OpenRailwayMapStylesService(Dio(), AssetFileService()).loadAllThemedStyles();
+  await OpenRailwayMapStylesService(
+    Dio(),
+    AssetFileService(),
+  ).loadAllThemedStyles();
 }

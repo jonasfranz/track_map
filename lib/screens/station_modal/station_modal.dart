@@ -19,7 +19,9 @@ class StationModal extends StatelessWidget {
         else
           SizedBox(height: 16),
         SafeArea(
-          minimum: const EdgeInsets.symmetric(horizontal: 16.0).copyWith(bottom: 16),
+          minimum: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+          ).copyWith(bottom: 16),
           child: Row(
             spacing: 8,
             crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -32,7 +34,10 @@ class StationModal extends StatelessWidget {
                   children: [
                     _StationTitle(properties: properties),
                     if (properties["operator"] case final String operator?)
-                      Text(operator, style: Theme.of(context).textTheme.bodyMedium),
+                      Text(
+                        operator,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                   ],
                 ),
               ),
@@ -63,9 +68,15 @@ class _StationTitle extends StatelessWidget {
     return RichText(
       text: TextSpan(
         children: [
-          TextSpan(text: properties["name"], style: TextStyle(fontWeight: FontWeight.bold)),
+          TextSpan(
+            text: properties["name"],
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           if (properties["label"] case final String label?)
-            TextSpan(text: " ($label)", style: TextStyle(fontWeight: FontWeight.w200)),
+            TextSpan(
+              text: " ($label)",
+              style: TextStyle(fontWeight: FontWeight.w200),
+            ),
         ],
         style: Theme.of(context).textTheme.headlineLarge,
       ),
@@ -87,12 +98,20 @@ class _HeaderImage extends StatelessWidget {
         child: Image(
           loadingBuilder:
               (context, child, loadingProgress) =>
-                  loadingProgress == null ? child : Center(child: CircularProgressIndicator()),
+                  loadingProgress == null
+                      ? child
+                      : Center(child: CircularProgressIndicator()),
           errorBuilder: (context, error, stackTrace) {
-            Logger().w("error loading image", error: error, stackTrace: stackTrace);
+            Logger().w(
+              "error loading image",
+              error: error,
+              stackTrace: stackTrace,
+            );
             return Center(child: Icon(Icons.image_not_supported));
           },
-          image: NetworkImage("${TrackMapConfig.backendUrl}/api/wikidata/$wikidataId"),
+          image: NetworkImage(
+            "${TrackMapConfig.backendUrl}/api/wikidata/$wikidataId",
+          ),
           fit: BoxFit.cover,
         ),
       ),

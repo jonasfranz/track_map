@@ -36,7 +36,8 @@ class SearchApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<SearchFacilities200ResponseInner>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<SearchFacilities200ResponseInner>>> searchFacilities({
+  Future<Response<BuiltList<SearchFacilities200ResponseInner>>>
+      searchFacilities({
     String? q,
     String? name,
     String? ref,
@@ -63,12 +64,19 @@ class SearchApi {
     );
 
     final _queryParameters = <String, dynamic>{
-      if (q != null) r'q': encodeQueryParameter(_serializers, q, const FullType(String)),
-      if (name != null) r'name': encodeQueryParameter(_serializers, name, const FullType(String)),
-      if (ref != null) r'ref': encodeQueryParameter(_serializers, ref, const FullType(String)),
+      if (q != null)
+        r'q': encodeQueryParameter(_serializers, q, const FullType(String)),
+      if (name != null)
+        r'name':
+            encodeQueryParameter(_serializers, name, const FullType(String)),
+      if (ref != null)
+        r'ref': encodeQueryParameter(_serializers, ref, const FullType(String)),
       if (uicRef != null)
-        r'uic_ref': encodeQueryParameter(_serializers, uicRef, const FullType(String)),
-      if (limit != null) r'limit': encodeQueryParameter(_serializers, limit, const FullType(int)),
+        r'uic_ref':
+            encodeQueryParameter(_serializers, uicRef, const FullType(String)),
+      if (limit != null)
+        r'limit':
+            encodeQueryParameter(_serializers, limit, const FullType(int)),
     };
 
     final _response = await _dio.request<Object>(
@@ -88,8 +96,8 @@ class SearchApi {
           ? null
           : _serializers.deserialize(
               rawResponse,
-              specifiedType:
-                  const FullType(BuiltList, [FullType(SearchFacilities200ResponseInner)]),
+              specifiedType: const FullType(
+                  BuiltList, [FullType(SearchFacilities200ResponseInner)]),
             ) as BuiltList<SearchFacilities200ResponseInner>;
     } catch (error, stackTrace) {
       throw DioException(
@@ -129,7 +137,8 @@ class SearchApi {
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<SearchMilestones200ResponseInner>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<SearchMilestones200ResponseInner>>> searchMilestones({
+  Future<Response<BuiltList<SearchMilestones200ResponseInner>>>
+      searchMilestones({
     required String ref,
     required num position,
     int? limit = 20,
@@ -155,8 +164,11 @@ class SearchApi {
 
     final _queryParameters = <String, dynamic>{
       r'ref': encodeQueryParameter(_serializers, ref, const FullType(String)),
-      r'position': encodeQueryParameter(_serializers, position, const FullType(num)),
-      if (limit != null) r'limit': encodeQueryParameter(_serializers, limit, const FullType(int)),
+      r'position':
+          encodeQueryParameter(_serializers, position, const FullType(num)),
+      if (limit != null)
+        r'limit':
+            encodeQueryParameter(_serializers, limit, const FullType(int)),
     };
 
     final _response = await _dio.request<Object>(
@@ -176,8 +188,8 @@ class SearchApi {
           ? null
           : _serializers.deserialize(
               rawResponse,
-              specifiedType:
-                  const FullType(BuiltList, [FullType(SearchMilestones200ResponseInner)]),
+              specifiedType: const FullType(
+                  BuiltList, [FullType(SearchMilestones200ResponseInner)]),
             ) as BuiltList<SearchMilestones200ResponseInner>;
     } catch (error, stackTrace) {
       throw DioException(
