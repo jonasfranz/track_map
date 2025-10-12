@@ -9,9 +9,10 @@ import 'package:track_map/screens/map/map_view_state.dart';
 import 'package:track_map/services/location_service.dart';
 import 'package:track_map/services/map_sync_service.dart';
 import 'package:track_map/services/open_railway_map_styles_service.dart';
+import 'package:track_map/utils/view_model.dart';
 
 @injectable
-class MapViewModel {
+class MapViewModel extends ViewModel {
   MapViewModel(this._stylesService, this._syncService, this._locationService);
 
   final OpenRailwayMapStylesService _stylesService;
@@ -79,6 +80,7 @@ class MapViewModel {
     );
   }
 
+  @override
   void dispose() {
     _syncService.dispose();
     _viewState$.close();

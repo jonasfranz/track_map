@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:intl/intl.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:motis/motis.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:track_map/screens/journey_details/journey_details_view.dart';
 import 'package:track_map/screens/station_modal/departure_board_view_model.dart';
-import 'package:track_map/screens/station_modal/mode_icon.dart';
+import 'package:track_map/utils/extensions.dart';
+import 'package:track_map/utils/use_view_model.dart';
+import 'package:track_map/widgets/train_info.dart';
 
 import '../../dependency_injection.dart';
 
@@ -18,12 +20,11 @@ class DepartureBoard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = useMemoized<DepartureBoardViewModel>(
+    final viewModel = useViewModel<DepartureBoardViewModel>(
       () => getIt(
         param1: coordinates,
       ),
     );
-    useEffect(() => viewModel.dispose, [viewModel]);
     final result = useStream(
       CombineLatestStream.combine3(
         viewModel.stopTimes$,
@@ -179,27 +180,18 @@ class _DepartureTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap:
+          () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => JourneyDetailsView(stopTime: stoptime),
+            ),
+          ),
       leading: _DepartureTime(stoptime: stoptime),
       trailing: switch (stoptime.place.track) {
         final track? => Text("Gl. $track"),
         _ => null,
       },
-      title: Row(
-        children: [
-          Chip(
-            avatar: Icon(stoptime.mode.icon),
-            label: Text(stoptime.displayName),
-          ),
-          Icon(Icons.arrow_right),
-          Expanded(
-            child: Text(
-              stoptime.headsign,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
+      title: TrainInfo(stoptime: stoptime),
     );
   }
 }
@@ -225,26 +217,10 @@ class _DepartureTime extends StatelessWidget {
             Text(
               departure.toTime(),
               style: TextStyle(
-                color:
-                    stoptime.isSignificantlyDelayed ? Colors.red : Colors.green,
+                color: stoptime.isSignificantlyDelayed ? Colors.red : Colors.green,
               ),
             ),
       ],
     );
   }
-}
-
-extension _StopDetails on StopTime {
-  bool get isSignificantlyDelayed => switch (place) {
-    Place(
-      departure: final departure?,
-      scheduledDeparture: final scheduledDeparture?,
-    ) =>
-      departure.difference(scheduledDeparture).inMinutes > 5,
-    _ => false,
-  };
-}
-
-extension _ToTime on DateTime {
-  String toTime() => DateFormat.Hm().format(this);
 }

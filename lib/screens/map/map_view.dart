@@ -9,6 +9,7 @@ import 'package:track_map/models/themed_map_source_resolver.dart';
 import 'package:track_map/screens/map/map_style_segment_button.dart';
 import 'package:track_map/screens/map/map_view_model.dart';
 import 'package:track_map/screens/search/map_search_bar.dart';
+import 'package:track_map/utils/use_view_model.dart';
 
 import '../station_modal/station_modal.dart';
 import 'map_view_state.dart';
@@ -18,8 +19,7 @@ class MapView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = useMemoized<MapViewModel>(getIt.call);
-    useEffect(() => viewModel.dispose, [viewModel]);
+    final viewModel = useViewModel<MapViewModel>(getIt.call);
     final viewState =
         useStream(
           viewModel.viewState$,
@@ -27,8 +27,7 @@ class MapView extends HookWidget {
         ).requireData;
 
     return viewState.map(
-      loading:
-          (_) => Scaffold(body: Center(child: CircularProgressIndicator())),
+      loading: (_) => Scaffold(body: Center(child: CircularProgressIndicator())),
       ready:
           (state) => Scaffold(
             floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
@@ -63,8 +62,7 @@ class MapView extends HookWidget {
                   trackCameraPosition: true,
                   myLocationEnabled: true,
                   compassEnabled: false,
-                  attributionButtonPosition:
-                      AttributionButtonPosition.bottomRight,
+                  attributionButtonPosition: AttributionButtonPosition.bottomRight,
                   attributionButtonMargins: Point(16, 16),
                 ),
                 _MapStyleSelection(

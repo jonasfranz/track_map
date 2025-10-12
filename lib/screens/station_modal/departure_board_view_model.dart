@@ -4,9 +4,10 @@ import 'package:injectable/injectable.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:motis/motis.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:track_map/utils/view_model.dart';
 
 @injectable
-class DepartureBoardViewModel {
+class DepartureBoardViewModel extends ViewModel {
   DepartureBoardViewModel(
     @factoryParam this._coordinates,
     this._motis,
@@ -117,6 +118,7 @@ class DepartureBoardViewModel {
     );
   }
 
+  @override
   Future<void> dispose() async {
     await _stopTimes$.close();
   }

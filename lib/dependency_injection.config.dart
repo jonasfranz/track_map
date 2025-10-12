@@ -15,6 +15,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:maplibre_gl/maplibre_gl.dart' as _i276;
 import 'package:motis/motis.dart' as _i1034;
 import 'package:openrailwaymap_api/openrailwaymap_api.dart' as _i95;
+import 'package:track_map/screens/journey_details/journey_details_view_model.dart'
+    as _i725;
 import 'package:track_map/screens/map/map_view_model.dart' as _i856;
 import 'package:track_map/screens/search/map_search_bar_controller.dart'
     as _i604;
@@ -37,14 +39,18 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final trackMapModule = _$TrackMapModule();
     gh.factory<_i361.Dio>(() => trackMapModule.dio);
-    gh.factory<_i395.MapSyncService>(() => _i395.MapSyncService());
     gh.factory<_i55.LocationService>(() => _i55.LocationService());
+    gh.factory<_i395.MapSyncService>(() => _i395.MapSyncService());
     gh.singleton<_i624.TempFileService>(() => trackMapModule.tempFileService);
     gh.singleton<_i95.SearchApi>(() => trackMapModule.searchApi);
     gh.singleton<_i1034.Motis>(() => trackMapModule.motis);
     gh.factoryParam<_i52.DepartureBoardViewModel, _i276.LatLng, dynamic>(
       (_coordinates, _) =>
           _i52.DepartureBoardViewModel(_coordinates, gh<_i1034.Motis>()),
+    );
+    gh.factoryParam<_i725.JourneyDetailsViewModel, _i1034.StopTime, dynamic>(
+      (_stopTime, _) =>
+          _i725.JourneyDetailsViewModel(_stopTime, gh<_i1034.Motis>()),
     );
     gh.singleton<_i952.OpenRailwayMapStylesService>(
       () => _i952.OpenRailwayMapStylesService(
