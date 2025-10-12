@@ -22,7 +22,6 @@ class TripView extends StatelessWidget {
 
 class _StopTile extends StatelessWidget {
   const _StopTile({
-    super.key,
     required this.stop,
     this.stopType = _StopType.intermediate,
   });
@@ -55,7 +54,7 @@ class _StopTile extends StatelessWidget {
 }
 
 class _StopTime extends StatelessWidget {
-  const _StopTime({super.key, required this.stop});
+  const _StopTime({required this.stop});
 
   final Place stop;
 
@@ -77,7 +76,6 @@ class _StopTime extends StatelessWidget {
 
 class _RealTimeTime extends StatelessWidget {
   const _RealTimeTime({
-    super.key,
     required this.planned,
     required this.actual,
   });
@@ -105,7 +103,7 @@ class _RealTimeTime extends StatelessWidget {
 }
 
 class _RouteProgress extends StatelessWidget {
-  const _RouteProgress({super.key, required this.stopType});
+  const _RouteProgress({required this.stopType});
 
   final _StopType stopType;
 
@@ -144,7 +142,6 @@ class _RouteProgress extends StatelessWidget {
 
 class _Circle extends StatelessWidget {
   const _Circle({
-    super.key,
     this.size = 12,
     this.child,
   });
