@@ -1,12 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
 import 'package:track_map/models/ice_status.dart';
 
 @injectable
 class ICEPortalService {
-  final Logger _log = Logger();
-
   Stream<ICEStatus?> pollStatus() =>
       Stream.periodic(Duration(seconds: 10)).asyncMap((_) => fetchStatus());
 
@@ -16,8 +13,7 @@ class ICEPortalService {
       final json = result.data;
       if (json == null) return null;
       return ICEStatus.fromJson(json);
-    } catch (err, stack) {
-      _log.t('error while fetching ice status', error: err, stackTrace: stack);
+    } catch (_) {
       return null;
     }
   }
