@@ -22,6 +22,7 @@ import 'package:track_map/screens/search/map_search_bar_controller.dart'
     as _i604;
 import 'package:track_map/screens/station_modal/departure_board_view_model.dart'
     as _i52;
+import 'package:track_map/services/ice_portal_service.dart' as _i468;
 import 'package:track_map/services/location_service.dart' as _i55;
 import 'package:track_map/services/map_sync_service.dart' as _i395;
 import 'package:track_map/services/open_railway_map_styles_service.dart'
@@ -41,6 +42,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i361.Dio>(() => trackMapModule.dio);
     gh.factory<_i55.LocationService>(() => _i55.LocationService());
     gh.factory<_i395.MapSyncService>(() => _i395.MapSyncService());
+    gh.factory<_i468.ICEPortalService>(() => _i468.ICEPortalService());
     gh.singleton<_i624.TempFileService>(() => trackMapModule.tempFileService);
     gh.singleton<_i95.SearchApi>(() => trackMapModule.searchApi);
     gh.singleton<_i1034.Motis>(() => trackMapModule.motis);
@@ -66,6 +68,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i952.OpenRailwayMapStylesService>(),
         gh<_i395.MapSyncService>(),
         gh<_i55.LocationService>(),
+        gh<_i468.ICEPortalService>(),
       ),
     );
     gh.factory<_i604.MapSearchBarController>(

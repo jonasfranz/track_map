@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.4.0+1
 
 environment:
-  sdk: ^3.7.2
+  sdk: ^3.8.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -51,6 +51,7 @@ dependencies:
   motis:
     git: https://github.com/jonasfranz/motis_dart.git
   intl: ^0.20.2
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   altstore_updater:
@@ -61,6 +62,7 @@ dev_dependencies:
   build_runner: ^2.9.0
   flutter_lints: ^6.0.0
   freezed: ^3.2.3
+  json_serializable: ^6.11.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
